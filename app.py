@@ -1,3 +1,4 @@
+
 from pathlib import Path
 
 import joblib
@@ -38,9 +39,7 @@ def predict():
     data = request.get_json(silent=True)
 
     if not data:
-        return jsonify({
-            "error": "JSON request body is required"
-        }), 400
+        return jsonify({"error": "JSON request body is required"}), 400
 
     missing_fields = [
         feature for feature in FEATURES
@@ -54,8 +53,7 @@ def predict():
         }), 400
 
     sample = pd.DataFrame([{
-        feature: data[feature]
-        for feature in FEATURES
+        feature: data[feature] for feature in FEATURES
     }])
 
     model = load_model()
