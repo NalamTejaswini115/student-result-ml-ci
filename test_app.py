@@ -1,5 +1,5 @@
-import unittest
 
+import unittest
 from app import app
 
 
@@ -10,7 +10,6 @@ class TestPredictionApplication(unittest.TestCase):
 
     def test_health_endpoint(self):
         response = self.client.get("/")
-
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get_json()["status"], "ok")
 
@@ -24,12 +23,8 @@ class TestPredictionApplication(unittest.TestCase):
                 "previous_score": 80
             }
         )
-
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.get_json()["prediction"],
-            "PASS"
-        )
+        self.assertEqual(response.get_json()["prediction"], "PASS")
 
     def test_low_performance_prediction(self):
         response = self.client.post(
@@ -41,12 +36,8 @@ class TestPredictionApplication(unittest.TestCase):
                 "previous_score": 35
             }
         )
-
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.get_json()["prediction"],
-            "FAIL"
-        )
+        self.assertEqual(response.get_json()["prediction"], "FAIL")
 
     def test_missing_field_validation(self):
         response = self.client.post(
@@ -56,12 +47,8 @@ class TestPredictionApplication(unittest.TestCase):
                 "internal_marks": 85
             }
         )
-
         self.assertEqual(response.status_code, 400)
-        self.assertIn(
-            "missing_fields",
-            response.get_json()
-        )
+        self.assertIn("missing_fields", response.get_json())
 
 
 if __name__ == "__main__":
